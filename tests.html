@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>torotoro test suite</title>
+    <style>
+
+     .failed {
+         background: #800;
+         color: #fff;
+     }
+     .passed {
+         background: #080;
+         color: #fff;
+     }
+
+    </style>
+</head>
+<body>
+    <h1>torotoro test suite</h1>
+    <div id="root"></div>
+
+    <script src="torotoro.js"></script>
+    <script src="tests.js"></script>
+    <script>
+
+     testSuite(configureDescribe((function (state) {
+         var root = document.getElementById("root");
+         var indentation = 20;
+
+         state.level = 0;
+         state.results = [];
+
+         function inc() {
+             state.level += 1;
+         }
+
+         function dec() {
+             state.level -= 1;
+         }
+
+         function createEntry(className, result) {
+             var node = document.createElement("div");
+             node.className = className;
+             node.style.paddingLeft = String(result.level * indentation) + "px";
+             node.innerText = result.title;
+             return node;
+         }
+
+         function pass(result) {
+             var node = createEntry("passed", result);
+             root.appendChild(node);
+         }
+
+         function fail(result) {
+             var node = createEntry("failed", result);
+             root.appendChild(node);
+         }
+
+         return {
+             flush: function () {
+                 var i = 0;
+                 var result = null;
+                 var ok = true;
+
+                 while (i < state.results.length) {
+                     result = state.results[i];
+
+                     if (result.hasPassed) {
+                         pass(result);
+                     } else {
+                         ok = false;
+                         fail(result);
+                     }
+
+                     i = i + 1;
+                 }
+
+                 if (ok) {
+                     pass({ level: 0, title: "Test suite passed." });
+                 } else {
+                     fail({ level: 0, title: "Test suite failed." });
+                 }
+             },
+             scope: function (fn) {
+                 inc();
+                 fn(dec);
+             },
+             push: function (result) {
+                 result.level = state.level;
+                 state.results.push(result);
+             }
+         };
+     }({}))), torotoro);
+
+    </script>
+</body>
+</html>

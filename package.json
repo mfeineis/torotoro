@@ -1,0 +1,27 @@
+{
+  "name": "torotoro",
+  "version": "0.1.0",
+  "description": "A minimalistic dependency free spy library that runs everywhere",
+  "main": "torotoro.js",
+  "scripts": {
+    "test": "node tests.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mfeineis/torotoro.git"
+  },
+  "keywords": [
+    "spy",
+    "mock",
+    "testing"
+  ],
+  "author": "Martin Feineis",
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/mfeineis/torotoro/issues"
+  },
+  "homepage": "https://github.com/mfeineis/torotoro#readme",
+  "devDependencies": {
+    "chalk": "^2.4.1"
+  }
+}
